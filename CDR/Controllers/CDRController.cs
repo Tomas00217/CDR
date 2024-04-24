@@ -1,4 +1,6 @@
-﻿using CDR.Services;
+﻿using CDR.Models.Filters;
+using CDR.Repositories;
+using CDR.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CDR.Controllers;
@@ -8,10 +10,12 @@ namespace CDR.Controllers;
 public class CDRController : ControllerBase
 {
     private readonly CDRService _cdrService;
+    private readonly ICDRRepository _cdrRepository;
 
-    public CDRController(CDRService cdrService)
+    public CDRController(CDRService cdrService, ICDRRepository cdrRepository)
     {
         _cdrService = cdrService;
+        _cdrRepository = cdrRepository;
     }
 
     [HttpPost("upload")]
@@ -35,5 +39,12 @@ public class CDRController : ControllerBase
         {
             return StatusCode(500, e.Message);
         }
+    }
+
+    [HttpGet("records")]
+    public async Task<IActionResult> GetCallRecords([FromQuery] CallDetailRecordFilters filters)
+    {
+        var callRecords = await _cdrRepository.GetCallDetailRecordsAsync(filters);
+        return Ok(callRecords);
     }
 }

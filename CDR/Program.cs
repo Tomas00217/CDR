@@ -1,4 +1,6 @@
+using CDR.Mapper;
 using CDR.Models;
+using CDR.Repositories;
 using CDR.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,9 +12,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddDbContext<CDRContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<CDRService>();
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddScoped<ICDRRepository, CDRRepository>();
 
 var app = builder.Build();
 
