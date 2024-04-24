@@ -3,6 +3,7 @@ using System;
 using CDR.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,17 +11,20 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CDR.Migrations
 {
     [DbContext(typeof(CDRContext))]
-    partial class CDRContextModelSnapshot : ModelSnapshot
+    [Migration("20240424092908_AddEndTimeColumn")]
+    partial class AddEndTimeColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.4");
 
             modelBuilder.Entity("CDR.Models.CallDetailRecordModel", b =>
                 {
-                    b.Property<string>("Reference")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("CallDate")
                         .HasColumnType("TEXT");
@@ -46,7 +50,11 @@ namespace CDR.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Reference");
+                    b.Property<string>("Reference")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
 
                     b.ToTable("CallDetailRecords");
                 });
