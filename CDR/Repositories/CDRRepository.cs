@@ -44,7 +44,7 @@ public class CDRRepository : ICDRRepository
     {
         var query = GetCallDetailRecordsFromTo(filters);
 
-        var averageCost = await query.AverageAsync(cdr => cdr.Cost);
+        var averageCost = (decimal)await query.AverageAsync(cdr => (double)cdr.Cost);
 
         return averageCost;
     }
@@ -95,7 +95,7 @@ public class CDRRepository : ICDRRepository
                                         .Select(grp => new
                                         {
                                             Currency = grp.Key,
-                                            TotalCost = grp.Sum(cdr => cdr.Cost)
+                                            TotalCost = (decimal)grp.Sum(cdr => (double)cdr.Cost)
                                         })
                                         .ToDictionaryAsync(grp => grp.Currency, grp => grp.TotalCost);
 

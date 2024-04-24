@@ -47,4 +47,63 @@ public class CDRController : ControllerBase
         var callRecords = await _cdrRepository.GetCallDetailRecordsAsync(filters);
         return Ok(callRecords);
     }
+
+    [HttpGet("average/call-cost")]
+    public async Task<IActionResult> GetAverageCallCost(DateTime? From, DateTime? To)
+    {
+        var filters = new CallDetailRecordFilters
+        {
+            From = From,
+            To = To,
+        };
+
+        var callRecords = await _cdrRepository.GetAverageCallCostAsync(filters);
+        return Ok(callRecords);
+    }
+
+    [HttpGet("average/call-duration")]
+    public async Task<IActionResult> GetAverageCallDuration(DateTime? From, DateTime? To)
+    {
+        var filters = new CallDetailRecordFilters
+        {
+            From = From,
+            To = To,
+        };
+
+        var callRecords = await _cdrRepository.GetAverageCallDurationAsync(filters);
+        return Ok(callRecords);
+    }
+
+    [HttpGet("average/num-of-calls")]
+    public async Task<IActionResult> GetAverageNumberOfCallsADayAsync(DateTime? From, DateTime? To)
+    {
+        var filters = new CallDetailRecordFilters
+        {
+            From = From,
+            To = To,
+        };
+
+        var callRecords = await _cdrRepository.GetAverageNumberOfCallsADayAsync(filters);
+        return Ok(callRecords);
+    }
+
+    [HttpGet("longest-calls")]
+    public async Task<IActionResult> GetLongestCallRecords([FromQuery] CallDetailRecordFilters filters)
+    {
+        var callRecords = await _cdrRepository.GetLongestCallRecordsAsync(filters);
+        return Ok(callRecords);
+    }
+
+    [HttpGet("total-costs")]
+    public async Task<IActionResult> GetTotalCostByCurrency(DateTime? From, DateTime? To)
+    {
+        var filters = new CallDetailRecordFilters
+        {
+            From = From,
+            To = To,
+        };
+
+        var callRecords = await _cdrRepository.GetTotalCostByCurrencyAsync(filters);
+        return Ok(callRecords);
+    }
 }
