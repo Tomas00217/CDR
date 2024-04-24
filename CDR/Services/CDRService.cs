@@ -13,6 +13,11 @@ public class CDRService
         _context = context;
     }
 
+    /// <summary>
+    /// Processes a csv file containing cdr records into database
+    /// </summary>
+    /// <param name="fileStream">Stream from which to read content</param>
+    /// <returns>Task</returns>
     public async Task ProcessCsvFileAsync(Stream fileStream)
     {
         using var reader = new StreamReader(fileStream);
