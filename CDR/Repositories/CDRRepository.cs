@@ -63,13 +63,16 @@ public class CDRRepository : ICDRRepository
         var query = GetCallDetailRecordsFromTo(filters);
 
         var longestCallDuration = query.Max(cdr => cdr.Duration);
-        var longestCalls = await query.Where(cdr => cdr.Duration == longestCallDuration).ToListAsync(); 
+        var longestCalls = await query.Where(cdr => cdr.Duration == longestCallDuration)
+                                    .Skip((filters.PageNumber - 1) * filters.PageSize)
+                                    .Take(filters.PageSize)
+                                    .ToListAsync(); 
 
         var longestCallsDtos = _mapper.Map<List<CallDetailRecordDto>>(longestCalls);
         return longestCallsDtos;
     }
 
-    public async Task<double> GetAverageNumberOfCallsADay(CallDetailRecordFilters filters)
+    public async Task<double> GetAverageNumberOfCallsADayAsync(CallDetailRecordFilters filters)
     {
         var query = GetCallDetailRecordsFromTo(filters);
 
@@ -105,12 +108,12 @@ public class CDRRepository : ICDRRepository
 
         if (filters.From.HasValue)
         {
-            query = query.Where(cdr => cdr.CallDate >= filters.From);
+            query = query.Where(cdr => cdr.CallDate.Date >= filters.From.Value.Date);
         }
 
         if (filters.To.HasValue)
         {
-            query = query.Where(cdr => cdr.CallDate <= filters.To);
+            query = query.Where(cdr => cdr.CallDate.Date <= filters.To.Value.Date);
         }
 
         return query;

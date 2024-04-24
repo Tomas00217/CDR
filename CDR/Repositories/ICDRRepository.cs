@@ -9,6 +9,6 @@ public interface ICDRRepository
     Task<decimal> GetAverageCallCostAsync(CallDetailRecordFilters filters);
     Task<double> GetAverageCallDurationAsync(CallDetailRecordFilters filters);
     Task<List<CallDetailRecordDto>> GetLongestCallRecordsAsync(CallDetailRecordFilters filters);
-    Task<double> GetAverageNumberOfCallsADay(CallDetailRecordFilters filters);
+    Task<double> GetAverageNumberOfCallsADayAsync(CallDetailRecordFilters filters);
     Task<Dictionary<string, decimal>> GetTotalCostByCurrencyAsync(CallDetailRecordFilters filters);
 }

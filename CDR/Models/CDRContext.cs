@@ -4,10 +4,14 @@ namespace CDR.Models;
 
 public class CDRContext : DbContext
 {
+    public CDRContext() : base()
+    {
+    }
+
     public CDRContext(DbContextOptions<CDRContext> options) : base(options)
     {
 
     }
 
-    public DbSet<CallDetailRecordModel> CallDetailRecords { get; set; }
+    public virtual DbSet<CallDetailRecordModel> CallDetailRecords { get; set; }
 }
