@@ -1,6 +1,6 @@
 @CDR_HostAddress = http://localhost:5113
 
-GET {{CDR_HostAddress}}/weatherforecast/
+GET {{CDR_HostAddress}}/api/cdr
 Accept: application/json
 
 ###
